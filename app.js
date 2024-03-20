@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // db
-const mongoDb = "YOUR MONGO URL HERE";
+const mongoDb = "";
 mongoose.connect(mongoDb);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
@@ -31,5 +31,18 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => res.render("index"));
 app.get("/sign-up", (req, res) => res.render("sign-up-form"));
+
+app.post("/sign-up", async (req, res, next) => {
+  try {
+    const user = new User({
+      username: req.body.username,
+      password: req.body.password,
+    });
+    const result = await user.save();
+    res.redirect("/");
+  } catch (err) {
+    return next(err);
+  }
+});
 
 app.listen(3000, () => console.log("app listening on port 3000!"));
