@@ -60,6 +60,13 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+// allows access to the currentUser variable in all views,
+// without having to manually pass it into all of the controllers
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.get("/", (req, res) => {
   res.render("index", { user: req.user });
 });
