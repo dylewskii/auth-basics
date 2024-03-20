@@ -1,4 +1,5 @@
 // imports
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
@@ -8,7 +9,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // db
-const mongoDb = "";
+const mongoDb = process.env.DATABASE_URI;
 mongoose.connect(mongoDb);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
